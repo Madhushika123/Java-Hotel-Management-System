@@ -235,6 +235,11 @@ public class room extends javax.swing.JFrame {
         jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(153, 0, 0));
         jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(153, 0, 0));
@@ -391,7 +396,7 @@ public class room extends javax.swing.JFrame {
             pst.setString(3, amount);
             pst.setString(4, roomno);
             pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Room Edit ");
+            JOptionPane.showMessageDialog(this, "Room Edited ");
             
             txtrtype.setSelectedIndex(-1);
             txtbtype.setSelectedIndex(-1);
@@ -417,6 +422,36 @@ public class room extends javax.swing.JFrame {
             jButton1.setEnabled(true);
             
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        String roomno = jLabel6.getText();
+        
+        
+        try {
+            pst = con.prepareStatement("delete from room where rid = ?");
+            
+            pst.setString(1, roomno);
+            
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Room Deleted ");
+            
+            txtrtype.setSelectedIndex(-1);
+            txtbtype.setSelectedIndex(-1);
+            txtamount.setText("");
+            autoID();
+            Load_room();
+            jButton1.setEnabled(true);
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(room.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
