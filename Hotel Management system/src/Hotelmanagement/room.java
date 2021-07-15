@@ -243,6 +243,11 @@ public class room extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -335,6 +340,19 @@ public class room extends javax.swing.JFrame {
             Logger.getLogger(room.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+        d = (DefaultTableModel)jTable1.getModel();
+        int selectIndex = jTable1.getSelectedRow();
+        
+        jLabel6.setText(d.getValueAt(selectIndex, 0).toString());
+        txtrtype.setSelectedItem(d.getValueAt(selectIndex, 1).toString());
+        txtbtype.setSelectedItem(d.getValueAt(selectIndex, 2).toString());
+        txtamount.setText(d.getValueAt(selectIndex, 3).toString());
+        
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
