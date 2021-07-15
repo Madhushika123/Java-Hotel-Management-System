@@ -166,7 +166,7 @@ public class room extends javax.swing.JFrame {
         txtrtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A/C", "Non A/C" }));
 
         txtbtype.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtbtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Single", "Double" }));
+        txtbtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Single", "Double", "Triple" }));
 
         txtamount.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
@@ -239,6 +239,11 @@ public class room extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(153, 0, 0));
         jButton4.setText("Clear");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -380,7 +385,7 @@ public class room extends javax.swing.JFrame {
         String amount = txtamount.getText();
         
         try {
-            pst = con.prepareStatement("update room set rtype = ?, btype = ?, amount = ? where id = ?");
+            pst = con.prepareStatement("update room set rtype = ?, btype = ?, amount = ? where rid = ?");
             pst.setString(1, roomtype);
             pst.setString(2, bedtype);
             pst.setString(3, amount);
@@ -401,6 +406,17 @@ public class room extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+            txtrtype.setSelectedIndex(-1);
+            txtbtype.setSelectedIndex(-1);
+            txtamount.setText("");
+            autoID();
+            Load_room();
+            jButton1.setEnabled(true);
+            
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
