@@ -214,6 +214,8 @@ public class room extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setText("Room");
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(153, 0, 0));
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -221,10 +223,21 @@ public class room extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(153, 0, 0));
         jButton2.setText("Edit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(153, 0, 0));
         jButton3.setText("Delete");
 
+        jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(153, 0, 0));
         jButton4.setText("Clear");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -304,7 +317,7 @@ public class room extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
@@ -314,6 +327,7 @@ public class room extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        
         String roomno = jLabel6.getText();
         String roomtype = txtrtype.getSelectedItem().toString();
         String bedtype = txtbtype.getSelectedItem().toString();
@@ -352,7 +366,41 @@ public class room extends javax.swing.JFrame {
         txtbtype.setSelectedItem(d.getValueAt(selectIndex, 2).toString());
         txtamount.setText(d.getValueAt(selectIndex, 3).toString());
         
+        jButton1.setEnabled(false);
+        
+        
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        String roomno = jLabel6.getText();
+        String roomtype = txtrtype.getSelectedItem().toString();
+        String bedtype = txtbtype.getSelectedItem().toString();
+        String amount = txtamount.getText();
+        
+        try {
+            pst = con.prepareStatement("update room set rtype = ?, btype = ?, amount = ? where id = ?");
+            pst.setString(1, roomtype);
+            pst.setString(2, bedtype);
+            pst.setString(3, amount);
+            pst.setString(4, roomno);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Room Edit ");
+            
+            txtrtype.setSelectedIndex(-1);
+            txtbtype.setSelectedIndex(-1);
+            txtamount.setText("");
+            autoID();
+            Load_room();
+            jButton1.setEnabled(true);
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(room.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
