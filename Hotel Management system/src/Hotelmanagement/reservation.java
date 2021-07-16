@@ -35,7 +35,7 @@ public class reservation extends javax.swing.JFrame {
         RoomTypeL();
         RoomNo();
         BedType();
-        Load_resrvation();
+        Load_reservation();
         
     }
     
@@ -83,7 +83,7 @@ public class reservation extends javax.swing.JFrame {
     }
     
     
-    public void Load_resrvation()
+    public void Load_reservation()
     {
         int c;
         
@@ -276,10 +276,20 @@ public class reservation extends javax.swing.JFrame {
         });
 
         jButton2.setText("Edit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Delete");
 
         jButton4.setText("Clear");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 0, 204));
@@ -299,6 +309,11 @@ public class reservation extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -480,16 +495,113 @@ public class reservation extends javax.swing.JFrame {
             txtamount.setText("");
             
             autoID();
-            //Load_room();
+            Load_reservation();
             
             
         } catch (SQLException ex) {
             Logger.getLogger(room.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
-        
-        
+      
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+   
+    
+    
+    
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        String reno = jLabel12.getText();
+        String name = txtname.getText();
+        String address = txtaddress.getText();
+        String mobile = txtmobile.getText();
+        SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd");
+        String StartDate = df1.format(txtcheckin.getDate());
+        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+        String EndDate = df2.format(txtcheckout.getDate());
+        String roomtype = txtrtype.getSelectedItem().toString();
+        String roomno = txtrno.getSelectedItem().toString();
+        String bedtype = txtbtype.getSelectedItem().toString();
+        String amount = txtamount.getText();
+        
+        try {
+            pst = con.prepareStatement("update reservation set  name = ?, address = ? , mobile =?,checkin =?, checkout =?, bedtype =?, roomno =?, rtype =?, amount =? where reid = ?");
+            
+            pst.setString(1, name);
+            pst.setString(2, address);
+            pst.setString(3, mobile);
+            pst.setString(4, StartDate);
+            pst.setString(5, EndDate);
+            pst.setString(6, roomtype);
+            pst.setString(7, roomno);
+            pst.setString(8, bedtype);
+            pst.setString(9, amount);
+            //pst.setString(10, reid);
+            
+            
+            
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(this, "Reservation  Edited ");
+            
+            
+            txtname.setText("");
+            txtaddress.setText("");
+            txtmobile.setText("");
+            txtrtype.setSelectedIndex(-1);
+            txtrno.setSelectedIndex(-1);
+            txtbtype.setSelectedIndex(-1);
+            txtamount.setText("");
+            autoID();
+            Load_reservation();
+            
+            jButton1.setEnabled(true);
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(room.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+        d = (DefaultTableModel)jTable1.getModel();
+        int selectIndex = jTable1.getSelectedRow();
+        
+        jLabel12.setText(d.getValueAt(selectIndex, 0).toString());
+        txtname.setText(d.getValueAt(selectIndex, 1).toString());
+        txtmobile.setText(d.getValueAt(selectIndex, 2).toString());
+      
+        txtrtype.setSelectedItem(d.getValueAt(selectIndex, 5).toString());
+        txtrno.setSelectedItem(d.getValueAt(selectIndex, 6).toString());
+        txtbtype.setSelectedItem(d.getValueAt(selectIndex, 7).toString());
+        txtamount.setText(d.getValueAt(selectIndex, 8).toString());
+        
+        jButton1.setEnabled(false);
+        
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        txtname.setText("");
+            txtaddress.setText("");
+            txtmobile.setText("");
+            txtrtype.setSelectedIndex(-1);
+            txtrno.setSelectedIndex(-1);
+            txtbtype.setSelectedIndex(-1);
+            txtamount.setText("");
+            autoID();
+            Load_reservation();
+            
+            jButton1.setEnabled(true);
+        
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
