@@ -305,7 +305,7 @@ public class user extends javax.swing.JFrame {
         txtname.setText(d.getValueAt(selectIndex, 1).toString());
         uname.setText(d.getValueAt(selectIndex, 2).toString());
         
-        //jButton1.setEnabled(false);
+        jButton1.setEnabled(false);
     }//GEN-LAST:event_jTable1MouseClicked
 
     
