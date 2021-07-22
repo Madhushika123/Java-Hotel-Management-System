@@ -246,6 +246,11 @@ public class user extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(598, 179, -1, 397));
@@ -289,6 +294,19 @@ public class user extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        
+        d = (DefaultTableModel)jTable1.getModel();
+        int selectIndex = jTable1.getSelectedRow();
+        
+        
+        txtname.setText(d.getValueAt(selectIndex, 1).toString());
+        uname.setText(d.getValueAt(selectIndex, 2).toString());
+        
+        //jButton1.setEnabled(false);
+    }//GEN-LAST:event_jTable1MouseClicked
 
     
     
