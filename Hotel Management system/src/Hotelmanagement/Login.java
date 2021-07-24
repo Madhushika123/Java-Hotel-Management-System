@@ -8,6 +8,7 @@ package Hotelmanagement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ public class Login extends javax.swing.JFrame {
     
     Connection con;
     PreparedStatement pst;
-    DefaultTableModel d;
+    ResultSet rs;
     
     public void Connect()
     {
@@ -136,6 +137,22 @@ public class Login extends javax.swing.JFrame {
                 pst = con.prepareStatement("select * from user where username = ? and password = ?");
                 pst.setString(1, username);
                 pst.setString(2, password);
+                rs = pst.executeQuery();
+                
+                if(rs.next())
+                {
+                    Main m = new Main();
+                    this.hide();
+                    m.setVisible(true);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(this, "Username or Password Do not Matach ");
+                    txtuname.setText("");
+                    txtpass.setText("");
+                    txtuname.requestFocus();
+                }
+                
                 
             } catch (SQLException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
